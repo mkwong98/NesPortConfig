@@ -25,8 +25,6 @@ public:
 private:
     Ui::NesPortConfigClass ui;
     SDL_Window* sdlWindow = nullptr;
-    int joyStickCnt;
-    SDL_JoystickID* joySticks;
     vector<SDL_Joystick*>js;
     string inputID;
     string inputSettings[2][8];

@@ -22,11 +22,15 @@ NesPortConfig::NesPortConfig(QWidget *parent)
 	}
 
 	//check for joysticks
+	int joyStickCnt;
+	SDL_JoystickID* joySticks;
+
 	joySticks = SDL_GetJoysticks(&joyStickCnt);
 	for (int i = 0; i < joyStickCnt; i++) {
 		SDL_Joystick* j = SDL_OpenJoystick(joySticks[i]);
 		if (j) js.push_back(j);
 	}
+	SDL_free(joySticks);
 
 	QTimer* timer = new QTimer(this);
 	connect(timer, &QTimer::timeout, this, &NesPortConfig::pollSdlEvents);
@@ -38,7 +42,6 @@ NesPortConfig::~NesPortConfig()
 	for (int i = 0; i < js.size(); i++) {
 		SDL_CloseJoystick(js[i]);
 	}
-	SDL_free(joySticks);
 	if (sdlWindow) {
 		SDL_DestroyWindow(sdlWindow);
 	}
