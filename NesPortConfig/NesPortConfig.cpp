@@ -35,6 +35,8 @@ NesPortConfig::NesPortConfig(QWidget *parent)
 	QTimer* timer = new QTimer(this);
 	connect(timer, &QTimer::timeout, this, &NesPortConfig::pollSdlEvents);
 	timer->start(10); // Poll every 10 milliseconds
+
+	loadConfigFile("");
 }
 
 NesPortConfig::~NesPortConfig()
@@ -250,7 +252,7 @@ void NesPortConfig::on_p2Start_clicked() {
 
 void NesPortConfig::pollSdlEvents() {
 	SDL_Event event;
-	inputSetting i = {0, 0, 0};
+	inputSetting i = {0, 0};
 	while (SDL_PollEvent(&event)) {
 		// Handle SDL events based on event.type
 		switch (event.type) {
@@ -259,25 +261,21 @@ void NesPortConfig::pollSdlEvents() {
 			break;
 		case SDL_EVENT_KEY_DOWN:
 			i.type = 1;
-			i.id = event.key.which;
 			i.v = event.key.scancode;
 			inputReceived(i);
 			break;
 		case SDL_EVENT_JOYSTICK_AXIS_MOTION:
 			i.type = 2;
-			i.id = event.jaxis.which;
 			i.v = (event.jaxis.axis << 8) | (event.jaxis.value < 0 ? 0xFF : 0x00);
 			inputReceived(i);
 			break;
 		case SDL_EVENT_JOYSTICK_HAT_MOTION:
 			i.type = 3;
-			i.id = event.jhat.which;
 			i.v = (event.jhat.hat << 8) | event.jhat.value;
 			inputReceived(i);
 			break;
 		case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
 			i.type = 4;
-			i.id = event.jbutton.which;
 			i.v = event.jbutton.button;
 			inputReceived(i);
 			break;
@@ -288,7 +286,7 @@ void NesPortConfig::pollSdlEvents() {
 void NesPortConfig::inputReceived(inputSetting i) {
 	SDL_HideWindow(sdlWindow);
 	string s;
-	s = std::to_string(i.type) + "_" + std::to_string(i.id) + "_" + std::to_string(i.v);
+	s = std::to_string(i.type) + "_" + std::to_string(i.v);
 	QString lineStr = QString::fromStdString(s);
 	if (inputID == "P1 Up") {
 		inputSettings[0][0] = s;

@@ -10,7 +10,6 @@ using namespace std;
 
 struct inputSetting {
     Uint8 type; //0=none, 1=keyboard, 2=joystick axis, 3=joystick hat, 4=joystick button
-    Uint32 id;
     Uint32 v;
 };
 
