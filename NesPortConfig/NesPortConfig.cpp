@@ -57,7 +57,17 @@ void NesPortConfig::on_gamePathSelect_clicked() {
 }
 
 void NesPortConfig::loadConfigFile(QString path) {
-    string configPath = path.toStdString() + "/config.txt";
+	string configPath = path.toStdString();
+	string lastChar = "";
+	if (configPath.length() > 0) {
+		lastChar = configPath.substr(configPath.length() - 1, 1);
+	}
+	if (lastChar == "/" || lastChar == "\\") {
+		configPath += "config.txt";
+	}
+	else {
+		configPath += lastChar + "config.txt";
+	}
     char* configData;
     size_t dataSize;
     configData = (char*)SDL_LoadFile(configPath.c_str(), &dataSize);
