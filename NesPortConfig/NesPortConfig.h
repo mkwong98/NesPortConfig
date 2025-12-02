@@ -26,7 +26,7 @@ private:
     SDL_Window* sdlWindow = nullptr;
     vector<SDL_Joystick*>js;
     string inputID;
-    string inputSettings[2][8];
+    string inputSettings[4][8];
 
     void loadConfigFile(QString path);
     void setWaitForInput(string id);
@@ -54,6 +54,24 @@ private slots:
     void on_p2B_clicked();
     void on_p2Select_clicked();
     void on_p2Start_clicked();
+
+    void on_p1Up_2_clicked();
+    void on_p1Down_2_clicked();
+    void on_p1Left_2_clicked();
+    void on_p1Right_2_clicked();
+    void on_p1A_2_clicked();
+    void on_p1B_2_clicked();
+    void on_p1Select_2_clicked();
+    void on_p1Start_2_clicked();
+
+    void on_p2Up_2_clicked();
+    void on_p2Down_2_clicked();
+    void on_p2Left_2_clicked();
+    void on_p2Right_2_clicked();
+    void on_p2A_2_clicked();
+    void on_p2B_2_clicked();
+    void on_p2Select_2_clicked();
+    void on_p2Start_2_clicked();
 
     void pollSdlEvents();
 

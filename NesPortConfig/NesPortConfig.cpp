@@ -66,6 +66,7 @@ void NesPortConfig::loadConfigFile(QString path) {
 		configPath += "config.txt";
 	}
 	else {
+		configPath += "/config.txt";
 	}
     char* configData;
     size_t dataSize;
@@ -98,6 +99,9 @@ void NesPortConfig::loadConfigFile(QString path) {
 						}
 						else if (valueHead == "HEIGHT") {
 							ui.displayHeight->setText(lineStr);
+						}
+						else if (valueHead == "USEFILTER") {
+							ui.cbxUseFilter->setChecked(lineStr == "1" ? true : false);
 						}
 					}
 					else if(lineHead == "CONTROL") {
@@ -164,6 +168,70 @@ void NesPortConfig::loadConfigFile(QString path) {
 						else if (valueHead == "P2_START") {
 							ui.p2StartLabel->setText(lineStr);
 							inputSettings[1][7] = valueTail;
+						}
+						else if (valueHead == "P1_UP2") {
+							ui.p1UpLabel_2->setText(lineStr);
+							inputSettings[2][0] = valueTail;
+						}
+						else if (valueHead == "P1_DOWN2") {
+							ui.p1DownLabel_2->setText(lineStr);
+							inputSettings[2][1] = valueTail;
+						}
+						else if (valueHead == "P1_LEFT2") {
+							ui.p1LeftLabel_2->setText(lineStr);
+							inputSettings[2][2] = valueTail;
+						}
+						else if (valueHead == "P1_RIGHT2") {
+							ui.p1RightLabel_2->setText(lineStr);
+							inputSettings[2][3] = valueTail;
+						}
+						else if (valueHead == "P1_A2") {
+							ui.p1ALabel_2->setText(lineStr);
+							inputSettings[2][4] = valueTail;
+						}
+						else if (valueHead == "P1_B2") {
+							ui.p1BLabel_2->setText(lineStr);
+							inputSettings[2][5] = valueTail;
+						}
+						else if (valueHead == "P1_SELECT2") {
+							ui.p1SelectLabel_2->setText(lineStr);
+							inputSettings[2][6] = valueTail;
+						}
+						else if (valueHead == "P1_START2") {
+							ui.p1StartLabel_2->setText(lineStr);
+							inputSettings[2][7] = valueTail;
+						}
+						else if (valueHead == "P2_UP2") {
+							ui.p2UpLabel_2->setText(lineStr);
+							inputSettings[3][0] = valueTail;
+						}
+						else if (valueHead == "P2_DOWN2") {
+							ui.p2DownLabel_2->setText(lineStr);
+							inputSettings[3][1] = valueTail;
+						}
+						else if (valueHead == "P2_LEFT2") {
+							ui.p2LeftLabel_2->setText(lineStr);
+							inputSettings[3][2] = valueTail;
+						}
+						else if (valueHead == "P2_RIGHT2") {
+							ui.p2RightLabel_2->setText(lineStr);
+							inputSettings[3][3] = valueTail;
+						}
+						else if (valueHead == "P2_A2") {
+							ui.p2ALabel_2->setText(lineStr);
+							inputSettings[3][4] = valueTail;
+						}
+						else if (valueHead == "P2_B2") {
+							ui.p2BLabel_2->setText(lineStr);
+							inputSettings[3][5] = valueTail;
+						}
+						else if (valueHead == "P2_SELECT2") {
+							ui.p2SelectLabel_2->setText(lineStr);
+							inputSettings[3][6] = valueTail;
+						}
+						else if (valueHead == "P2_START2") {
+							ui.p2StartLabel_2->setText(lineStr);
+							inputSettings[3][7] = valueTail;
 						}
 					}
 				}
@@ -258,6 +326,71 @@ void NesPortConfig::on_p2Start_clicked() {
 	setWaitForInput("P2 Start");
 }
 
+void NesPortConfig::on_p1Up_2_clicked() {
+	setWaitForInput("P1 Up set 2");
+}
+
+void NesPortConfig::on_p1Down_2_clicked() {
+	setWaitForInput("P1 Down set 2");
+}
+
+void NesPortConfig::on_p1Left_2_clicked() {
+	setWaitForInput("P1 Left set 2");
+}
+
+void NesPortConfig::on_p1Right_2_clicked() {
+	setWaitForInput("P1 Right set 2");
+}
+
+void NesPortConfig::on_p1A_2_clicked() {
+	setWaitForInput("P1 A set 2");
+}
+
+void NesPortConfig::on_p1B_2_clicked() {
+	setWaitForInput("P1 B set 2");
+}
+
+void NesPortConfig::on_p1Select_2_clicked() {
+	setWaitForInput("P1 Select set 2");
+}
+
+void NesPortConfig::on_p1Start_2_clicked() {
+	setWaitForInput("P1 Start set 2");
+}
+
+
+void NesPortConfig::on_p2Up_2_clicked() {
+	setWaitForInput("P2 Up set 2");
+}
+
+void NesPortConfig::on_p2Down_2_clicked() {
+	setWaitForInput("P2 Down set 2");
+}
+
+void NesPortConfig::on_p2Left_2_clicked() {
+	setWaitForInput("P2 Left set 2");
+}
+
+void NesPortConfig::on_p2Right_2_clicked() {
+	setWaitForInput("P2 Right set 2");
+}
+
+void NesPortConfig::on_p2A_2_clicked() {
+	setWaitForInput("P2 A set 2");
+}
+
+void NesPortConfig::on_p2B_2_clicked() {
+	setWaitForInput("P2 B set 2");
+}
+
+void NesPortConfig::on_p2Select_2_clicked() {
+	setWaitForInput("P2 Select set 2");
+}
+
+void NesPortConfig::on_p2Start_2_clicked() {
+	setWaitForInput("P2 Start set 2");
+}
+
 
 void NesPortConfig::pollSdlEvents() {
 	SDL_Event event;
@@ -267,6 +400,7 @@ void NesPortConfig::pollSdlEvents() {
 		switch (event.type) {
 		case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
 			SDL_HideWindow(sdlWindow);
+			inputReceived(i);
 			break;
 		case SDL_EVENT_KEY_DOWN:
 			i.type = 1;
@@ -295,7 +429,10 @@ void NesPortConfig::pollSdlEvents() {
 void NesPortConfig::inputReceived(inputSetting i) {
 	SDL_HideWindow(sdlWindow);
 	string s;
-	s = std::to_string(i.type) + "_" + std::to_string(i.v);
+	if(i.type == 0)
+		s = "-";
+	else
+		s = std::to_string(i.type) + "_" + std::to_string(i.v);
 	QString lineStr = QString::fromStdString(s);
 	if (inputID == "P1 Up") {
 		inputSettings[0][0] = s;
@@ -361,6 +498,70 @@ void NesPortConfig::inputReceived(inputSetting i) {
 		inputSettings[1][7] = s;
 		ui.p2StartLabel->setText(lineStr);
 	}
+	else if (inputID == "P1 Up set 2") {
+		inputSettings[2][0] = s;
+		ui.p1UpLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P1 Down set 2") {
+		inputSettings[2][1] = s;
+		ui.p1DownLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P1 Left set 2") {
+		inputSettings[2][2] = s;
+		ui.p1LeftLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P1 Right set 2") {
+		inputSettings[2][3] = s;
+		ui.p1RightLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P1 A set 2") {
+		inputSettings[2][4] = s;
+		ui.p1ALabel_2->setText(lineStr);
+	}
+	else if (inputID == "P1 B set 2") {
+		inputSettings[2][5] = s;
+		ui.p1BLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P1 Select set 2") {
+		inputSettings[2][6] = s;
+		ui.p1SelectLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P1 Start set 2") {
+		inputSettings[2][7] = s;
+		ui.p1StartLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P2 Up set 2") {
+		inputSettings[3][0] = s;
+		ui.p2UpLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P2 Down set 2") {
+		inputSettings[3][1] = s;
+		ui.p2DownLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P2 Left set 2") {
+		inputSettings[3][2] = s;
+		ui.p2LeftLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P2 Right set 2") {
+		inputSettings[3][3] = s;
+		ui.p2RightLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P2 A set 2") {
+		inputSettings[3][4] = s;
+		ui.p2ALabel_2->setText(lineStr);
+	}
+	else if (inputID == "P2 B set 2") {
+		inputSettings[3][5] = s;
+		ui.p2BLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P2 Select set 2") {
+		inputSettings[3][6] = s;
+		ui.p2SelectLabel_2->setText(lineStr);
+	}
+	else if (inputID == "P2 Start set 2") {
+		inputSettings[3][7] = s;
+		ui.p2StartLabel_2->setText(lineStr);
+	}
 	inputID = "";
 }
 
@@ -376,8 +577,13 @@ void NesPortConfig::on_saveConfig_clicked() {
 	line = "DISPLAY:WIDTH=" + ui.displayWidth->text().toStdString() + "\n";
 	SDL_IOprintf(stream, line.c_str());
 	line = "DISPLAY:HEIGHT=" + ui.displayHeight->text().toStdString() + "\n";
-
 	SDL_IOprintf(stream, line.c_str());
+	if(ui.cbxUseFilter->isChecked())
+		line = "DISPLAY:USEFILTER=1\n";
+	else
+		line = "DISPLAY:USEFILTER=0\n";
+	SDL_IOprintf(stream, line.c_str());
+
 	line = "CONTROL:P1_UP=" + inputSettings[0][0] + "\n";
 	SDL_IOprintf(stream, line.c_str());
 	line = "CONTROL:P1_DOWN=" + inputSettings[0][1] + "\n";
@@ -410,6 +616,40 @@ void NesPortConfig::on_saveConfig_clicked() {
 	line = "CONTROL:P2_SELECT=" + inputSettings[1][6] + "\n";
 	SDL_IOprintf(stream, line.c_str());
 	line = "CONTROL:P2_START=" + inputSettings[1][7] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+
+	line = "CONTROL:P1_UP2=" + inputSettings[2][0] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P1_DOWN2=" + inputSettings[2][1] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P1_LEFT2=" + inputSettings[2][2] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P1_RIGHT2=" + inputSettings[2][3] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P1_A=2" + inputSettings[2][4] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P1_B=2" + inputSettings[2][5] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P1_SELECT2=" + inputSettings[2][6] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P1_START2=" + inputSettings[2][7] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+
+	line = "CONTROL:P2_UP2=" + inputSettings[3][0] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P2_DOWN2=" + inputSettings[3][1] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P2_LEFT2=" + inputSettings[3][2] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P2_RIGHT2=" + inputSettings[3][3] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P2_A2=" + inputSettings[3][4] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P2_B2=" + inputSettings[3][5] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P2_SELECT2=" + inputSettings[3][6] + "\n";
+	SDL_IOprintf(stream, line.c_str());
+	line = "CONTROL:P2_START2=" + inputSettings[3][7] + "\n";
 	SDL_IOprintf(stream, line.c_str());
 
 	SDL_CloseIO(stream);
