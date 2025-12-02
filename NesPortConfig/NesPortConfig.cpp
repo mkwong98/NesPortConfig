@@ -66,7 +66,6 @@ void NesPortConfig::loadConfigFile(QString path) {
 		configPath += "config.txt";
 	}
 	else {
-		configPath += lastChar + "config.txt";
 	}
     char* configData;
     size_t dataSize;
